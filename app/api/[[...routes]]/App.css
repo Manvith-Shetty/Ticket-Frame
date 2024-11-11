@@ -1,0 +1,21 @@
+.seat-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    padding: 20px;
+    background: #0f3460;
+    border-radius: 10px;
+  }
+  
+  .seat {
+    padding: 10px;
+    background-color: #533483;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  .seat.selected {
+    background-color: #4CAF50;
+  }
