@@ -5,9 +5,12 @@ import Image from "next/image";
 import styles from "./page.module.css";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const frameTags = await getFrameMetadata(
-    `${process.env.VERCEL_URL || "http://localhost:3000"}/api`
+  const apiUrl = new URL(
+    "/api",
+    process.env.VERCEL_URL || "http://localhost:3000"
   );
+  const frameTags = await getFrameMetadata(apiUrl.toString());
+
   const metadataObject: {
     [name: string]: string | number | (string | number)[];
   } = {};
