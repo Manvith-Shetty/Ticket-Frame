@@ -170,7 +170,7 @@ app.frame("/", async (c) => {
             justifyContent: "center",
           }}
         >
-          {availableSeats.slice(0, 10).map((seat) => (
+          {availableSeats.slice(0, 10).map((seat: { id: any; price: any }) => (
             <div
               key={seat.id}
               style={{
@@ -218,11 +218,11 @@ app.frame("/", async (c) => {
       </div>
     ),
     intents: [
-      <TextInput placeholder="Enter seats (e.g., A1,A2)" />,
-      <Button value="confirm" action="/">
+      <TextInput key="input" placeholder="Enter seats (e.g., A1,A2)" />,
+      <Button key="confirm" value="confirm" action="/">
         Confirm
       </Button>,
-      <Button>Book</Button>,
+      <Button key="book">Book</Button>,
       // <Button.Transaction value="confirm">Confirm Booking</Button.Transaction>,
       <Button.Reset>Reset Selection</Button.Reset>,
     ],
@@ -230,16 +230,14 @@ app.frame("/", async (c) => {
 });
 
 app.frame("/summary", async (c) => {
-  const urlParams = new URLSearchParams(c.req.url.split("?")[1]);
-  const theatre = urlParams.get("theatre") || "INOX";
-  const movieTitle = urlParams.get("movieTitle") || "Inception";
-  const showTime = urlParams.get("showTime") || "19:00";
-  const selectedSeats = urlParams.get("selectedSeats")?.split(",") || ["A1"];
+  const theatre = "INOX";
+  const movieTitle = "Inception";
+  const showTime = "19:00";
+  const selectedSeats = ["A1", "A5"];
 
-  // Calculate costs
-  const ticketPrice = 200; // Price per ticket from your seats frame
+  const ticketPrice = 200;
   const totalAmount = ticketPrice * selectedSeats.length;
-  const convenienceFee = Math.round(totalAmount * 0.0175); // 1.75% convenience fee
+  const convenienceFee = Math.round(totalAmount * 0.0175);
   const finalAmount = totalAmount + convenienceFee;
 
   return c.res({
@@ -341,7 +339,7 @@ app.frame("/summary", async (c) => {
               }}
             >
               <span>
-                Ticket Price ({selectedSeats.length} tickets × ₹{ticketPrice})
+                Ticket Price ({selectedSeats.length} tickets * ₹{ticketPrice})
               </span>
               <span style={{ color: "#0f172a" }}>₹{totalAmount}</span>
             </div>
@@ -376,7 +374,8 @@ app.frame("/summary", async (c) => {
       </div>
     ),
     intents: [
-      <Button.Transaction value="pay">Pay ₹{finalAmount}</Button.Transaction>,
+      // <Button.Transaction >Pay ₹{finalAmount.toString()}</Button.Transaction>,
+      <Button>Pay ₹{finalAmount}</Button>,
     ],
   });
 });
