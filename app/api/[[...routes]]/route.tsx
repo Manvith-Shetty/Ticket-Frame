@@ -375,7 +375,7 @@ app.frame("/summary", async (c) => {
     ),
     intents: [
       // <Button.Transaction >Pay ₹{finalAmount.toString()}</Button.Transaction>,
-      <Button>Pay ₹{finalAmount}</Button>,
+      <Button>Pay ₹{finalAmount.toString()}</Button>,
     ],
   });
 });
